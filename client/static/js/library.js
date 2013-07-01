@@ -24,25 +24,33 @@ Array.prototype.uniq = function() {
   return r;
 };
 
-function padDigit(val, len) {
+
+var status_choices   = [ '正常', '障害', '不明' ];
+var severity_choices = [ '未分類', '情報', '警告', '軽度の障害', '重度の障害', '致命的な障害' ];
+
+exports.status_choices   = function() { return status_choices; };
+exports.severity_choices = function() { return severity_choices; };
+
+
+exports.padDigit = function (val, len) {
   s = "00000000" + val;
   return s.substr(-len);
-}
+};
 
-function formatDate(str) {
+exports.formatDate = function (str) {
   var val = new Date();
   val.setTime(Number(str) * 1000);
-  var d = val.getFullYear() + "/" + padDigit(val.getMonth() + 1, 2) + "/" + padDigit(val.getDate(), 2);
-  var t = padDigit(val.getHours(), 2) + ":" + padDigit(val.getMinutes(), 2) + ":" + padDigit(val.getSeconds(), 2);
+  var d = val.getFullYear() + "/" + exports.padDigit(val.getMonth() + 1, 2) + "/" + exports.padDigit(val.getDate(), 2);
+  var t = exports.padDigit(val.getHours(), 2) + ":" + exports.padDigit(val.getMinutes(), 2) + ":" + exports.padDigit(val.getSeconds(), 2);
   return d + " " + t;
-}
+};
 
-function formatSecond(sec) {
-  var t = padDigit(parseInt(sec / 3600), 2) + ":" + padDigit(parseInt(sec / 60) % 60, 2) + ":" + padDigit(sec % 60, 2);
+exports.formatSecond = function (sec) {
+  var t = exports.padDigit(parseInt(sec / 3600), 2) + ":" + exports.padDigit(parseInt(sec / 60) % 60, 2) + ":" + exports.padDigit(sec % 60, 2);
   return t;
-}
+};
 
-function setCandidate(target, list) {
+exports.setCandidate = function (target, list) {
   var x;
   var s;
 
@@ -50,9 +58,9 @@ function setCandidate(target, list) {
     s += "<option>" + list[x] + "</option>";
   }
   target.append(s);
-}
+};
 
-function buildChooser() {
+exports.buildChooser = function () {
   var targets = [
     "#select-server",
     "#select-group",
@@ -72,27 +80,27 @@ function buildChooser() {
   }
 
   return klass;
-}
+};
 
-function chooseRow() {
+exports.chooseRow = function () {
   var klass = buildChooser();
 
   $("#table tbody tr").css("display", "");
   if ( "" != klass ) {
     $("#table tbody tr:not(" + klass + ")").css("display", "none");
   }
-}
+};
 
-function chooseColumn() {
+exports.chooseColumn = function () {
   var klass = buildChooser();
 
   $("#table td").css("display", "");
   if ( "" != klass ) {
     $("#table td:not(" + klass + ")").css("display", "none");
   }
-}
+};
 
-function setStatus(value) {
+exports.setStatus = function (value) {
   var elem;
   var x;
   var s;
@@ -117,10 +125,10 @@ function setStatus(value) {
     elem.empty();
     elem.append(s);
   }
-}
+};
 
-function update(param) {
-  setStatus({
+exports.update = function (param) {
+  exports.setStatus({
     "class" : "warning",
     "label" : "DRAW",
     "lines" : [ "描画中" ],
@@ -128,16 +136,16 @@ function update(param) {
 
   updateCore(param);
 
-  setStatus({
+  exports.setStatus({
     "class" : "success",
     "label" : "DONE",
     "lines" : [],
   });
-}
+};
 
-function schedule(timer, table, param) {
+exports.schedule = function (timer, table, param) {
   setTimeout(function() {
-    setStatus({
+    exports.setStatus({
       "class" : "warning",
       "label" : "LOAD",
       "lines" : [ "バックエンドと通信中" ],
@@ -145,7 +153,7 @@ function schedule(timer, table, param) {
 
     $.getJSON("/asura/" + table + ".json", function(json) {
       rawData = json;
-      update(param);
+      exports.update(param);
     });
   }, timer);
-}
+};

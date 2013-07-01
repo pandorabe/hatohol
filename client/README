@@ -13,6 +13,7 @@ Required environments
 - Django 1.5
 - Bootstrap (from twitter)
 - JavaScript enabled (web browser side)
+- Teajs + v8
 
 This is a Django application.
 This application does not use models and DBs.
@@ -82,3 +83,18 @@ If you want to serve to the outside of the host that this frontend run on, you n
 
 Ex.)
 $ ./manage.py runserver 0.0.0.0:8000
+
+
+========================================
+How to test
+========================================
+
+JavaScript part
+---------------
+
+**** TENTATIVE ****
+
+A test for JavaScript part is driven by CommonJS style unit test with Teajs.
+Teajs (oldly v8cgi) is a server side JavaScript environment which engine is the v8.
+
+- just run test/tests.js

@@ -86,69 +86,18 @@
       chooseRow();
     });
 
-    function parseData(rd) {
-      var pd = new Object();
-      var x;
-      var o;
-      var ss, as;
-      var s;
-
-      ss = [];
-      as = [];
-      for (x = 0; x < rd["items"].length; ++x) {
-        o = rd["items"][x];
-        ss.push(rd["servers"][o["serverId"]]["name"]);
-        if ( 0 == o["itemGroupName"].length ) {
-          o["itemGroupName"] = "_non_";
-        }
-        else {
-          as.push(o["itemGroupName"]);
-        }
-      }
-      pd.servers = ss.uniq().sort();
-      pd.applis  = as.uniq().sort();
-
-      return pd;
-    }
-
-    function drawTableBody(rd) {
-      var x;
-      var s;
-      var o;
-      var klass, server, host, clock, appli;
-
-      s = "";
-      for (x = 0; x < rd["items"].length; ++x) {
-        o = rd["items"][x];
-        server = rd["servers"][o["serverId"]]["name"];
-        host   = o["hostId"]; // rd["servers"][o["serverId"]]["hosts"][o["hostId"]]["name"];  ITS NOT IMPLEMENTED YET
-        clock  = o["lastValueTime"];
-        appli  = o["itemGroupName"];
-        klass  = server + " " + appli;
-        s += "<tr class='" + klass + "'>";
-        s += "<td>" + server + "</td>";
-        s += "<td>" + host + "</td>";
-        s += "<td>" + appli + "</td>";
-        s += "<td>" + o["brief"] + "</td>";
-        s += "<td data-sort-value='" + clock + "'>" + formatDate(clock) + "</td>";
-        s += "<td>" + o["lastValue"] + "</td>";
-        s += "<td>" + o["prevValue"] + "</td>";
-        s += "</tr>";
-      }
-
-      return s;
-    }
+{% include "viewer/latest_ajax.js" %}
 
     function updateCore() {
-      parsedData = parseData(rawData);
+      parsedData = exports.parseData(rawData);
 
-      setCandidate($("#select-server"),      parsedData.servers);
-      setCandidate($("#select-application"), parsedData.applis);
+      lib.setCandidate($("#select-server"),      parsedData.servers);
+      lib.setCandidate($("#select-application"), parsedData.applis);
 
       $("#table tbody").empty();
-      $("#table tbody").append(drawTableBody(rawData));
+      $("#table tbody").append(exports.drawTableBody(rawData));
     }
 
-    schedule(0000, "items");
+    lib.schedule(0000, "items");
   </script>
 {% endblock %}
