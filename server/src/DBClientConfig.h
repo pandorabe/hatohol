@@ -82,6 +82,7 @@ public:
 	bool isFaceMySQLEnabled(void);
 	int  getFaceRestPort(void);
 	void setFaceRestPort(int port);
+	bool isCopyOnDemandEnabled(void);
 	void addTargetServer(MonitoringServerInfo *monitoringServerInfo);
 	void getTargetServers(MonitoringServerInfoList &monitoringServers);
 
