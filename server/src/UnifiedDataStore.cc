@@ -149,6 +149,7 @@ void UnifiedDataStore::update(void)
 
 void UnifiedDataStore::getTriggerList(TriggerInfoList &triggerList)
 {
+	update();
 	DBClientHatohol dbHatohol;
 	dbHatohol.getTriggerInfoList(triggerList);
 }
@@ -162,6 +163,7 @@ void UnifiedDataStore::getEventList(EventInfoList &eventList)
 
 void UnifiedDataStore::getItemList(ItemInfoList &itemList)
 {
+	update();
 	DBClientHatohol dbHatohol;
 	dbHatohol.getItemInfoList(itemList);
 }
