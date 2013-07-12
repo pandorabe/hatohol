@@ -39,7 +39,7 @@ struct UnifiedDataStore::PrivateContext
 	sem_t updatedSemaphore;
 	ReadWriteLock rwlock;
 	size_t remainingArmsCount;
-	ArmBaseVector remainingArms;
+	ArmBaseVector updateArmsQueue;
 	timespec lastUpdateTime;
 
 	PrivateContext()
@@ -143,9 +143,9 @@ UnifiedDataStore::PrivateContext::updatedCallback(void)
 {
 	rwlock.writeLock();
 
-	if (!remainingArms.empty()) {
-		wakeArm(remainingArms.front());
-		remainingArms.erase(remainingArms.begin());
+	if (!updateArmsQueue.empty()) {
+		wakeArm(updateArmsQueue.front());
+		updateArmsQueue.erase(updateArmsQueue.begin());
 	}
 
 	remainingArmsCount--;
@@ -186,7 +186,7 @@ void UnifiedDataStore::update(void)
 		if (i < PrivateContext::maxRunningArms) {
 			m_ctx->wakeArm(arm);
 		} else {
-			m_ctx->remainingArms.push_back(arm);
+			m_ctx->updateArmsQueue.push_back(arm);
 		}
 	}
 	m_ctx->rwlock.unlock();
