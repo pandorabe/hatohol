@@ -139,11 +139,7 @@ UnifiedDataStore::UnifiedDataStore(void)
 : m_ctx(NULL)
 {
 	m_ctx = new PrivateContext();
-
-	// start VirtualDataStoreZabbix
 	m_ctx->vdsZabbix = VirtualDataStoreZabbix::getInstance();
-
-	// start VirtualDataStoreNagios
 	m_ctx->vdsNagios = VirtualDataStoreNagios::getInstance();
 }
 
