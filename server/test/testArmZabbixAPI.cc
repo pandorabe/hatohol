@@ -479,12 +479,15 @@ void test_oneProcWithoutFetchItems()
 
 	DBClientHatohol db;
 	EventInfoList eventInfoList;
+	TriggerInfoList triggerInfoList;
 	ItemInfoList itemInfoList;
 	db.getEventInfoList(eventInfoList);
+	db.getTriggerInfoList(triggerInfoList);
 	db.getItemInfoList(itemInfoList);
 
 	// FIXME: should check contents
 	cppcut_assert_equal(false, eventInfoList.empty());
+	cppcut_assert_equal(false, triggerInfoList.empty());
 	cppcut_assert_equal(false, itemInfoList.empty());
 }
 
@@ -502,12 +505,15 @@ void test_oneProcWithCopyOnDemandEnabled()
 
 	DBClientHatohol db;
 	EventInfoList eventInfoList;
+	TriggerInfoList triggerInfoList;
 	ItemInfoList itemInfoList;
 	db.getEventInfoList(eventInfoList);
+	db.getTriggerInfoList(triggerInfoList);
 	db.getItemInfoList(itemInfoList);
 
 	// FIXME: should check contents
 	cppcut_assert_equal(false, eventInfoList.empty());
+	cppcut_assert_equal(false, triggerInfoList.empty());
 	cppcut_assert_equal(true, itemInfoList.empty());
 }
 
@@ -525,12 +531,15 @@ void test_oneProcWithFetchItems()
 
 	DBClientHatohol db;
 	EventInfoList eventInfoList;
+	TriggerInfoList triggerInfoList;
 	ItemInfoList itemInfoList;
 	db.getEventInfoList(eventInfoList);
+	db.getTriggerInfoList(triggerInfoList);
 	db.getItemInfoList(itemInfoList);
 
 	// FIXME: should check contents
 	cppcut_assert_equal(true, eventInfoList.empty());
+	cppcut_assert_equal(true, triggerInfoList.empty());
 	cppcut_assert_equal(false, itemInfoList.empty());
 }
 
