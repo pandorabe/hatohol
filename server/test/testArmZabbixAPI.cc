@@ -119,6 +119,11 @@ public:
 		return ArmZabbixAPI::mainThreadOneProc();
 	}
 
+	UpdateType testGetUpdateType(void)
+	{
+		return ArmZabbixAPI::getUpdateType();
+	}
+
 	string testInitialJsonRequest(void)
 	{
 		return ArmZabbixAPI::getInitialJsonRequest();
@@ -411,6 +416,21 @@ void test_mainThreadOneProc()
 	deleteDBClientZabbixDB(svId);
 	ArmZabbixAPITestee armZbxApiTestee(serverInfo);
 	cppcut_assert_equal(true, armZbxApiTestee.testMainThreadOneProc());
+}
+
+void test_updateTypeShouldBeChangedOnFetchItems()
+{
+	int svId = 0;
+	MonitoringServerInfo serverInfo = g_defaultServerInfo;
+	serverInfo.id = svId;
+	serverInfo.port = getTestPort();
+	deleteDBClientZabbixDB(svId);
+	ArmZabbixAPITestee armZbxApiTestee(serverInfo);
+	cppcut_assert_equal(ArmBase::UPDATE_POLLING,
+			    armZbxApiTestee.testGetUpdateType());
+	armZbxApiTestee.fetchItems();
+	cppcut_assert_equal(ArmBase::UPDATE_ITEM_REQUEST,
+			    armZbxApiTestee.testGetUpdateType());
 }
 
 void test_makeItemVecotr(void)
