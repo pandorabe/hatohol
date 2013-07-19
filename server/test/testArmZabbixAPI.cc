@@ -350,12 +350,15 @@ void setup(void)
 		g_apiEmulator.start(EMULATOR_PORT);
 	else
 		g_apiEmulator.setOperationMode(OPE_MODE_NORMAL);
+
+	deleteDBClientDB(DB_DOMAIN_ID_HATOHOL);
 }
 
 void teardown(void)
 {
 	g_sync.reset();
 	g_apiEmulator.reset();
+	deleteDBClientDB(DB_DOMAIN_ID_HATOHOL);
 }
 
 // ---------------------------------------------------------------------------
@@ -466,15 +469,19 @@ void test_setCopyOnDemandEnabled()
 			    armZbxApiTestee.testGetCopyOnDemandEnabled());
 }
 
-void test_oneProcWithoutFetchItems()
+MonitoringServerInfo setupServer(void)
 {
 	int svId = 0;
+	deleteDBClientZabbixDB(svId);
 	MonitoringServerInfo serverInfo = g_defaultServerInfo;
 	serverInfo.id = svId;
 	serverInfo.port = getTestPort();
-	deleteDBClientDB(DB_DOMAIN_ID_HATOHOL);
-	deleteDBClientZabbixDB(svId);
-	ArmZabbixAPITestee armZbxApiTestee(serverInfo);
+	return serverInfo;
+}
+
+void test_oneProcWithoutFetchItems()
+{
+	ArmZabbixAPITestee armZbxApiTestee(setupServer());
 	armZbxApiTestee.testMainThreadOneProc();
 
 	DBClientHatohol db;
@@ -493,13 +500,7 @@ void test_oneProcWithoutFetchItems()
 
 void test_oneProcWithCopyOnDemandEnabled()
 {
-	int svId = 0;
-	MonitoringServerInfo serverInfo = g_defaultServerInfo;
-	serverInfo.id = svId;
-	serverInfo.port = getTestPort();
-	deleteDBClientDB(DB_DOMAIN_ID_HATOHOL);
-	deleteDBClientZabbixDB(svId);
-	ArmZabbixAPITestee armZbxApiTestee(serverInfo);
+	ArmZabbixAPITestee armZbxApiTestee(setupServer());
 	armZbxApiTestee.testSetCopyOnDemandEnabled(true);
 	armZbxApiTestee.testMainThreadOneProc();
 
@@ -519,13 +520,7 @@ void test_oneProcWithCopyOnDemandEnabled()
 
 void test_oneProcWithFetchItems()
 {
-	int svId = 0;
-	MonitoringServerInfo serverInfo = g_defaultServerInfo;
-	serverInfo.id = svId;
-	serverInfo.port = getTestPort();
-	deleteDBClientDB(DB_DOMAIN_ID_HATOHOL);
-	deleteDBClientZabbixDB(svId);
-	ArmZabbixAPITestee armZbxApiTestee(serverInfo);
+	ArmZabbixAPITestee armZbxApiTestee(setupServer());
 	armZbxApiTestee.fetchItems();
 	armZbxApiTestee.testMainThreadOneProc();
 
