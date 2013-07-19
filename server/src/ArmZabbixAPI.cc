@@ -1000,7 +1000,7 @@ bool ArmZabbixAPI::mainThreadOneProc(void)
 	ItemTablePtr events = updateEvents();
 	makeHatoholEvents(events);
 
-	if (!isCopyOnDemandEnabled()) {
+	if (!getCopyOnDemandEnabled()) {
 		ItemTablePtr items = updateItems();
 		makeHatoholItems(items);
 		updateApplications(items);
