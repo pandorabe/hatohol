@@ -1,13 +1,12 @@
 Hatohol
 =======
 
-Overview
+概要
 --------
-Hatohol collects monitoring information from running monitoring systems
-and shows their integrated data on one screen.
-This feature enables to consolidate monitoring centers and the operators
-even when monitored devices are being used in different places or
-with different monitoring software.
+Hatoholはモニタリングシステムからモニタリング情報を収集し，
+それらの情報を一つの画面に統合したデータを表示します．
+Hatoholの特徴は監視されるデバイスが異なる場所や異なるソフトウェアを利用していた時でも，
+監視センターやオペレーターを統合することが可能になります．
 
 ![Overview](doc/misc/hatohol-overview.png)
 
