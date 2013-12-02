@@ -50,12 +50,12 @@ enum ActionConditionEnableFlag {
 struct ActionCondition {
 	uint32_t enableBits;
 
-	int      serverId;
-	uint64_t hostId;
-	uint64_t hostGroupId;
-	uint64_t triggerId;
-	int      triggerStatus;
-	int      triggerSeverity;
+	ServerId    serverId;
+	HostId      hostId;
+	HostGroupId hostGroupId;
+	TriggerId   triggerId;
+	int         triggerStatus;
+	int         triggerSeverity;
 	ComparisonType triggerSeverityCompType;
 
 	// methods

@@ -332,7 +332,7 @@ const TriggerInfo &searchTestTriggerInfo(const EventInfo &eventInfo)
 			continue;
 		return trigInfo;
 	}
-	cut_fail("Not found: server ID: %u, trigger ID: %"PRIu64,
+	cut_fail("Not found: server ID: %"PRIu32", trigger ID: %"PRIu32,
 	         eventInfo.serverId, eventInfo.triggerId);
 	return *(new TriggerInfo()); // never exectuted, just to pass build
 }

@@ -408,13 +408,13 @@ void _assertActionLogJustAfterExec(
 	  ActionManager::NUM_COMMNAD_ACTION_EVENT_ARG_MAGIC);
 	expectedArgs.push_back(StringUtils::sprintf("%d", ctx->actDef.id));
 	expectedArgs.push_back(StringUtils::sprintf("%"PRIu32, evInf.serverId));
-	expectedArgs.push_back(StringUtils::sprintf("%"PRIu64, evInf.hostId));
+	expectedArgs.push_back(StringUtils::sprintf("%"PRIu32, evInf.hostId));
 	expectedArgs.push_back(StringUtils::sprintf("%ld.%ld",
 	  evInf.time.tv_sec, evInf.time.tv_nsec));
-	expectedArgs.push_back(StringUtils::sprintf("%"PRIu64, evInf.id));
+	expectedArgs.push_back(StringUtils::sprintf("%"PRIu32, evInf.id));
 	expectedArgs.push_back(StringUtils::sprintf("%d", evInf.type));
 	expectedArgs.push_back(
-	  StringUtils::sprintf("%"PRIu64, evInf.triggerId));
+	  StringUtils::sprintf("%"PRIu32, evInf.triggerId));
 	expectedArgs.push_back(StringUtils::sprintf("%d", evInf.status));
 	expectedArgs.push_back(StringUtils::sprintf("%d", evInf.severity));
 	getArguments(ctx, expectedArgs);

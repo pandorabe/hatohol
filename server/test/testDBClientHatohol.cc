@@ -56,7 +56,7 @@ static string makeExpectedOutput(const TriggerInfo *triggerInfo)
 {
 	string expectedOut =
 	  StringUtils::sprintf(
-	    "%"PRIu32"|%"PRIu64"|%d|%d|%ld|%lu|%"PRIu64"|%s|%s\n",
+	    "%"PRIu32"|%"PRIu32"|%d|%d|%ld|%lu|%"PRIu32"|%s|%s\n",
 	    triggerInfo->serverId,
 	    triggerInfo->id,
 	    triggerInfo->status, triggerInfo->severity,
@@ -125,7 +125,7 @@ static string makeEventOutput(EventInfo &eventInfo)
 {
 	string output =
 	  StringUtils::sprintf(
-	    "%"PRIu32"|%"PRIu64"|%ld|%ld|%d|%u|%"PRIu64"|%s|%s\n",
+	    "%"PRIu32"|%"PRIu32"|%ld|%ld|%d|%u|%"PRIu32"|%s|%s\n",
 	    eventInfo.serverId, eventInfo.id,
 	    eventInfo.time.tv_sec, eventInfo.time.tv_nsec,
 	    eventInfo.status, eventInfo.severity,
@@ -209,7 +209,7 @@ static string makeExpectedItemOutput(ItemInfo *itemInfo)
 {
 	string expectedOut =
 	  StringUtils::sprintf(
-	    "%"PRIu32"|%"PRIu64"|%"PRIu64"|%s|%ld|%lu|%s|%s|%s\n",
+	    "%"PRIu32"|%"PRIu32"|%"PRIu32"|%s|%ld|%lu|%s|%s|%s\n",
 	    itemInfo->serverId, itemInfo->id,
 	    itemInfo->hostId,
 	    itemInfo->brief.c_str(),

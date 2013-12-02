@@ -22,6 +22,7 @@
 
 #include <cstdlib>
 #include <stdint.h>
+#include "DBClientHatohol.h"
 
 // definitions of packet types
 enum
@@ -143,15 +144,15 @@ static const size_t RESIDENT_PROTO_EVENT_ACK_CODE_LEN = 4;
 static const uint16_t RESIDENT_MODULE_VERSION = 1;
 
 struct ResidentNotifyEventArg {
-	uint32_t actionId;
-	uint32_t serverId;
-	uint64_t hostId;
-	timespec time;
-	uint64_t eventId;
-	uint16_t eventType;
-	uint64_t triggerId;
-	uint16_t triggerStatus;
-	uint16_t triggerSeverity;
+	uint32_t  actionId;
+	ServerId  serverId;
+	HostId    hostId;
+	timespec  time;
+	EventId   eventId;
+	uint16_t  eventType;
+	TriggerId triggerId;
+	uint16_t  triggerStatus;
+	uint16_t  triggerSeverity;
 };
 
 struct ResidentModule {

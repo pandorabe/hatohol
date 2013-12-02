@@ -1152,7 +1152,7 @@ size_t DBClientHatohol::getNumberOfBadHosts(uint32_t serverId,
 void DBClientHatohol::addTriggerInfoBare(const TriggerInfo &triggerInfo)
 {
 	string condition = StringUtils::sprintf
-	  ("server_id=%d and id=%"PRIu64, triggerInfo.serverId, triggerInfo.id);
+	  ("server_id=%"PRIu32" and id=%"PRIu32, triggerInfo.serverId, triggerInfo.id);
 	VariableItemGroupPtr row;
 	if (!isRecordExisting(TABLE_NAME_TRIGGERS, condition)) {
 		DBAgentInsertArg arg;
@@ -1209,7 +1209,7 @@ void DBClientHatohol::addTriggerInfoBare(const TriggerInfo &triggerInfo)
 void DBClientHatohol::addEventInfoBare(const EventInfo &eventInfo)
 {
 	string condition = StringUtils::sprintf
-	  ("server_id=%d and id=%"PRIu64, eventInfo.serverId, eventInfo.id);
+	  ("server_id=%"PRIu32" and id=%"PRIu32, eventInfo.serverId, eventInfo.id);
 	VariableItemGroupPtr row;
 	if (!isRecordExisting(TABLE_NAME_EVENTS, condition)) {
 		DBAgentInsertArg arg;
@@ -1273,7 +1273,7 @@ void DBClientHatohol::addEventInfoBare(const EventInfo &eventInfo)
 
 void DBClientHatohol::addItemInfoBare(const ItemInfo &itemInfo)
 {
-	string condition = StringUtils::sprintf("server_id=%d and id=%"PRIu64,
+	string condition = StringUtils::sprintf("server_id=%"PRIu32" and id=%"PRIu32,
 	                                        itemInfo.serverId, itemInfo.id);
 	VariableItemGroupPtr row;
 	if (!isRecordExisting(TABLE_NAME_ITEMS, condition)) {

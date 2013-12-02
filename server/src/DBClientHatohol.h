@@ -25,6 +25,13 @@
 #include "DataQueryOption.h"
 #include "DBClientUser.h"
 
+typedef uint32_t ServerId;
+typedef uint32_t HostId;
+typedef uint32_t HostGroupId;
+typedef uint32_t TriggerId;
+typedef uint32_t EventId;
+typedef uint32_t MonitoringItemId;
+
 enum TriggerStatusType {
 	TRIGGER_STATUS_OK,
 	TRIGGER_STATUS_PROBLEM,
@@ -47,8 +54,8 @@ static const uint64_t ALL_TRIGGERS = -1;
 static const uint64_t ALL_HOST_GROUPS = -1;
 
 struct HostInfo {
-	uint32_t            serverId;
-	uint64_t            id;
+	ServerId            serverId;
+	HostId              id;
 	string              hostName;
 
 	// The follwong members are currently not used.
@@ -56,19 +63,19 @@ struct HostInfo {
 	string              nickname;
 };
 
-static const uint64_t INVALID_HOST_ID = -1;
+static const HostId INVALID_HOST_ID = -1;
 
 typedef list<HostInfo>               HostInfoList;
 typedef HostInfoList::iterator       HostInfoListIterator;
 typedef HostInfoList::const_iterator HostInfoListConstIterator;
 
 struct TriggerInfo {
-	uint32_t            serverId;
-	uint64_t            id;
+	ServerId            serverId;
+	TriggerId           id;
 	TriggerStatusType   status;
 	TriggerSeverityType severity;
 	timespec            lastChangeTime;
-	uint64_t            hostId;
+	HostId              hostId;
 	string              hostName;
 	string              brief;
 };
@@ -88,17 +95,17 @@ struct EventInfo {
 	// 'id' is the unique in a 'serverId'. It is typically the same as
 	// the event ID of a monitroing system such as ZABBIX and Nagios.
 	uint64_t            unifiedId;
-	uint32_t            serverId;
-	uint64_t            id;
+	ServerId            serverId;
+	EventId             id;
 	timespec            time;
 	EventType           type;
-	uint64_t            triggerId;
+	TriggerId           triggerId;
 
 	// status and type are basically same information.
 	// so they should be unified.
 	TriggerStatusType   status;
 	TriggerSeverityType severity;
-	uint64_t            hostId;
+	HostId              hostId;
 	string              hostName;
 	string              brief;
 };
@@ -108,9 +115,9 @@ typedef EventInfoList::iterator       EventInfoListIterator;
 typedef EventInfoList::const_iterator EventInfoListConstIterator;
 
 struct ItemInfo {
-	uint32_t            serverId;
-	uint64_t            id;
-	uint64_t            hostId;
+	ServerId            serverId;
+	MonitoringItemId    id;
+	HostId              hostId;
 	string              brief;
 	timespec            lastValueTime;
 	string              lastValue;

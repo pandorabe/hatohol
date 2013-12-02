@@ -50,7 +50,7 @@ static const string triggerSeverityToString(TriggerSeverityType type)
 static string dumpTriggerInfo(const TriggerInfo &info)
 {
 	return StringUtils::sprintf(
-		"%"PRIu32"|%"PRIu64"|%s|%s|%lu|%ld|%"PRIu64"|%s|%s\n",
+		"%"PRIu32"|%"PRIu32"|%s|%s|%lu|%ld|%"PRIu32"|%s|%s\n",
 		info.serverId,
 		info.id,
 		triggerStatusToString(info.status).c_str(),
@@ -86,7 +86,7 @@ static const char *eventTypeToString(EventType type)
 static string dumpEventInfo(const EventInfo &info)
 {
 	return StringUtils::sprintf(
-		"%"PRIu32"|%"PRIu64"|%lu|%ld|%s|%s|%s|%"PRIu64"|%s|%s\n",
+		"%"PRIu32"|%"PRIu32"|%lu|%ld|%s|%s|%s|%"PRIu32"|%s|%s\n",
 		info.serverId,
 		info.id,
 		info.time.tv_sec,
@@ -102,7 +102,7 @@ static string dumpEventInfo(const EventInfo &info)
 static string dumpItemInfo(const ItemInfo &info)
 {
 	return StringUtils::sprintf(
-		"%"PRIu32"|%"PRIu64"|%"PRIu64"|%s|%lu|%ld|%s|%s|%s\n",
+		"%"PRIu32"|%"PRIu32"|%"PRIu32"|%s|%lu|%ld|%s|%s|%s\n",
 		info.serverId,
 		info.id,
 		info.hostId,

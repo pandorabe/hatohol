@@ -163,9 +163,9 @@ static void _assertGetEventsAsHatoholFormat(bool noHostData = false)
 	TriggerInfoListIterator it = triggerInfoList.begin();
 	for (; it != triggerInfoList.end(); ++it) {
 		TriggerInfo &triggerInfo = *it;
-		cppcut_assert_equal((uint64_t)1, triggerInfo.id);
+		cppcut_assert_equal((TriggerId)1, triggerInfo.id);
 
-		uint64_t expectedHostId = noHostData ? 0 : 1;
+		HostId expectedHostId = noHostData ? 0 : 1;
 		cppcut_assert_equal(expectedHostId, triggerInfo.hostId);
 
 		string expectedHostName = noHostData ? "" : "name";

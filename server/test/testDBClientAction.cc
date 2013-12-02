@@ -35,13 +35,13 @@ static string makeExpectedString(const ActionDef &actDef, int expectedId)
 	            StringUtils::sprintf("%d|", cond.serverId) :
 	            DBCONTENT_MAGIC_NULL "|";
 	expect += cond.isEnable(ACTCOND_HOST_ID) ?
-	            StringUtils::sprintf("%"PRIu64"|", cond.hostId) :
+	            StringUtils::sprintf("%"PRIu32"|", cond.hostId) :
 	            DBCONTENT_MAGIC_NULL "|";
 	expect += cond.isEnable(ACTCOND_HOST_GROUP_ID) ?
-	            StringUtils::sprintf("%"PRIu64"|", cond.hostGroupId) :
+	            StringUtils::sprintf("%"PRIu32"|", cond.hostGroupId) :
 	            DBCONTENT_MAGIC_NULL "|";
 	expect += cond.isEnable(ACTCOND_TRIGGER_ID) ?
-	             StringUtils::sprintf("%"PRIu64"|", cond.triggerId) :
+	             StringUtils::sprintf("%"PRIu32"|", cond.triggerId) :
 	            DBCONTENT_MAGIC_NULL "|";
 	expect += cond.isEnable(ACTCOND_TRIGGER_STATUS) ?
 	            StringUtils::sprintf("%d|", cond.triggerStatus) :
@@ -77,7 +77,7 @@ static string makeExpectedLogString(
 
 	string expect =
 	  StringUtils::sprintf(
-	    "%"PRIu64"|%d|%d|%d|%s|%s|%s|%d|%s|%"PRIu32"|%"PRIu64"\n",
+	    "%"PRIu64"|%d|%d|%d|%s|%s|%s|%d|%s|%"PRIu32"|%"PRIu32"\n",
 	    logId, actDef.id, status, expectedStarterId,
 	    DBCONTENT_MAGIC_NULL,
 	    DBCONTENT_MAGIC_CURR_DATETIME,

@@ -45,14 +45,11 @@ const int FaceRest::DEFAULT_NUM_WORKERS = 4;
 
 typedef void (*RestHandler) (FaceRest::RestJob *job);
 
-typedef uint64_t ServerID;
-typedef uint64_t HostID;
-typedef uint64_t TriggerID;
-typedef map<HostID, string> HostNameMap;
-typedef map<ServerID, HostNameMap> HostNameMaps;
+typedef map<HostId, string> HostNameMap;
+typedef map<ServerId, HostNameMap> HostNameMaps;
 
-typedef map<TriggerID, string> TriggerBriefMap;
-typedef map<ServerID, TriggerBriefMap> TriggerBriefMaps;
+typedef map<TriggerId, string> TriggerBriefMap;
+typedef map<ServerId, TriggerBriefMap> TriggerBriefMaps;
 
 static const guint DEFAULT_PORT = 33194;
 
@@ -1070,7 +1067,7 @@ static void addHosts(JsonBuilderAgent &agent,
 	agent.endArray();
 }
 
-static string getHostName(const ServerID serverId, const HostID hostId)
+static string getHostName(const ServerId serverId, const HostId hostId)
 {
 	UnifiedDataStore *dataStore = UnifiedDataStore::getInstance();
 	string hostName;
@@ -1078,7 +1075,7 @@ static string getHostName(const ServerID serverId, const HostID hostId)
 	dataStore->getHostList(hostInfoList, serverId, hostId);
 	if (hostInfoList.empty()) {
 		MLPL_WARN("Failed to get HostInfo: "
-		          "%"PRIu64", %"PRIu64"\n",
+		          "%"PRIu32", %"PRIu32"\n",
 		          serverId, hostId);
 	} else {
 		HostInfo &hostInfo = *hostInfoList.begin();
@@ -1093,11 +1090,11 @@ static void addHostsIdNameHash(
 {
 	HostNameMaps::iterator server_it = hostMaps.find(serverInfo.id);
 	agent.startObject("hosts");
-	ServerID serverId = server_it->first;
+	ServerId serverId = server_it->first;
 	HostNameMap &hosts = server_it->second;
 	HostNameMap::iterator it = hosts.begin();
 	for (; server_it != hostMaps.end() && it != hosts.end(); it++) {
-		HostID hostId = it->first;
+		HostId hostId = it->first;
 		string &hostName = it->second;
 		if (lookupHostName)
 			hostName = getHostName(serverId, hostId);
@@ -1109,7 +1106,7 @@ static void addHostsIdNameHash(
 }
 
 static string getTriggerBrief(
-  const ServerID serverId, const TriggerID triggerId)
+  const ServerId serverId, const TriggerId triggerId)
 {
 	// TODO: use UnifiedDataStore
 	DBClientHatohol dbHatohol;
@@ -1119,7 +1116,7 @@ static string getTriggerBrief(
 	                                          serverId, triggerId);
 	if (!succeeded) {
 		MLPL_WARN("Failed to get TriggerInfo: "
-		          "%"PRIu64", %"PRIu64"\n",
+		          "%"PRIu32", %"PRIu32"\n",
 		          serverId, triggerId);
 	} else {
 		triggerBrief = triggerInfo.brief;
@@ -1133,11 +1130,11 @@ static void addTriggersIdBriefHash(
 {
 	TriggerBriefMaps::iterator server_it = triggerMaps.find(serverInfo.id);
 	agent.startObject("triggers");
-	ServerID serverId = server_it->first;
+	ServerId serverId = server_it->first;
 	TriggerBriefMap &triggers = server_it->second;
 	TriggerBriefMap::iterator it = triggers.begin();
 	for (; server_it != triggerMaps.end() && it != triggers.end(); it++) {
-		TriggerID triggerId = it->first;
+		TriggerId triggerId = it->first;
 		string &triggerBrief = it->second;
 		if (lookupTriggerBrief)
 			triggerBrief = getTriggerBrief(serverId, triggerId);
@@ -1633,32 +1630,32 @@ void FaceRest::handlerPostAction(RestJob *job)
 		actionDef.timeout = 0;
 
 	// serverId
-	succeeded = getParamWithErrorReply<int>(
-	              job, "serverId", "%d", cond.serverId, &exist);
+	succeeded = getParamWithErrorReply<ServerId>(
+	              job, "serverId", "%"PRIu32, cond.serverId, &exist);
 	if (!succeeded)
 		return;
 	if (exist)
 		cond.enable(ACTCOND_SERVER_ID);
 
 	// hostId
-	succeeded = getParamWithErrorReply<uint64_t>(
-	              job, "hostId", "%"PRIu64, cond.hostId, &exist);
+	succeeded = getParamWithErrorReply<HostId>(
+	              job, "hostId", "%"PRIu32, cond.hostId, &exist);
 	if (!succeeded)
 		return;
 	if (exist)
 		cond.enable(ACTCOND_HOST_ID);
 
 	// hostGroupId
-	succeeded = getParamWithErrorReply<uint64_t>(
-	              job, "hostGroupId", "%"PRIu64, cond.hostGroupId, &exist);
+	succeeded = getParamWithErrorReply<HostGroupId>(
+	              job, "hostGroupId", "%"PRIu32, cond.hostGroupId, &exist);
 	if (!succeeded)
 		return;
 	if (exist)
 		cond.enable(ACTCOND_HOST_GROUP_ID);
 
 	// triggerId
-	succeeded = getParamWithErrorReply<uint64_t>(
-	              job, "triggerId", "%"PRIu64, cond.triggerId, &exist);
+	succeeded = getParamWithErrorReply<TriggerId>(
+	              job, "triggerId", "%"PRIu32, cond.triggerId, &exist);
 	if (!succeeded)
 		return;
 	if (exist)

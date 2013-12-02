@@ -624,12 +624,12 @@ void ActionManager::execCommandAction(const ActionDef &actionDef,
 	argVect.push_back(NUM_COMMNAD_ACTION_EVENT_ARG_MAGIC);
 	argVect.push_back(StringUtils::sprintf("%d", actionDef.id));
 	argVect.push_back(StringUtils::sprintf("%"PRIu32, eventInfo.serverId));
-	argVect.push_back(StringUtils::sprintf("%"PRIu64, eventInfo.hostId));
+	argVect.push_back(StringUtils::sprintf("%"PRIu32, eventInfo.hostId));
 	argVect.push_back(StringUtils::sprintf("%ld.%ld",
 	  eventInfo.time.tv_sec, eventInfo.time.tv_nsec));
-	argVect.push_back(StringUtils::sprintf("%"PRIu64, eventInfo.id));
+	argVect.push_back(StringUtils::sprintf("%"PRIu32, eventInfo.id));
 	argVect.push_back(StringUtils::sprintf("%d", eventInfo.type));
-	argVect.push_back(StringUtils::sprintf("%"PRIu64, eventInfo.triggerId));
+	argVect.push_back(StringUtils::sprintf("%"PRIu32, eventInfo.triggerId));
 	argVect.push_back(StringUtils::sprintf("%d", eventInfo.status));
 	argVect.push_back(StringUtils::sprintf("%d", eventInfo.severity));
 
@@ -1334,10 +1334,10 @@ void ActionManager::postProcSpawnFailure(
 	// MLPL log
 	MLPL_ERR(
 	  "%s, action ID: %d, log ID: %"PRIu64", "
-	  "server ID: %d, event ID: %"PRIu64", "
+	  "server ID: %"PRIu32", event ID: %"PRIu32", "
 	  "time: %ld.%09ld, type: %s, "
-	  "trigger ID: %"PRIu64", status: %s, severity: %s, "
-	  "host ID: %"PRIu64"\n", 
+	  "trigger ID: %"PRIu32", status: %s, severity: %s, "
+	  "host ID: %"PRIu32"\n", 
 	  error->message, actionDef.id, actorInfo->logId,
 	  eventInfo.serverId, eventInfo.id,
 	  eventInfo.time.tv_sec, eventInfo.time.tv_nsec,
@@ -1367,7 +1367,7 @@ void ActionManager::fillTriggerInfoInEventInfo(EventInfo &eventInfo)
 		eventInfo.hostName = triggerInfo.hostName;
 		eventInfo.brief    = triggerInfo.brief;
 	} else {
-		MLPL_ERR("Not found: svID: %"PRIu32", trigID: %"PRIu64"\n",
+		MLPL_ERR("Not found: svID: %"PRIu32", trigID: %"PRIu32"\n",
 		         eventInfo.serverId, eventInfo.triggerId);
 		eventInfo.severity = TRIGGER_SEVERITY_UNKNOWN;
 		eventInfo.hostId   = INVALID_HOST_ID;
