@@ -19,9 +19,10 @@ install:
   - npm install -g mocha-phantomjs phantomjs
   - sudo pip install django==1.5.4
   - sudo pip install mysql-python
+  - sudo pip install cpp-coveralls
 before_script:
   - ./autogen.sh
-  - ./configure
+  - ./configure --enable-coverage
   - sudo chmod +r /var/log/syslog
   - sudo chmod 777 /var/run
   - make -j`cat /proc/cpuinfo | grep ^processor| wc -l`
@@ -38,3 +39,5 @@ script:
   - popd; pushd .
   - test/launch-hatohol-for-test.sh
   - mocha-phantomjs http://localhost:8000/test/index.html
+after_success:
+  - coveralls
