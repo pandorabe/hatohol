@@ -40,4 +40,4 @@ script:
   - test/launch-hatohol-for-test.sh
   - mocha-phantomjs http://localhost:8000/test/index.html
 after_success:
-  - coveralls
+  - coveralls --exclude server/mlpl/test --exclude server/test
